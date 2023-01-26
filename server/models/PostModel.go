@@ -11,14 +11,14 @@ import (
 )
 
 type Post struct {
-	ID          primitive.ObjectID `bson:"_id" json:"id,omitempty"`
-	Title       string             `bson:"title" json:"title,omitempty"`
-	Description string             `bson:"description" json:"description,omitempty"`
+	ID          primitive.ObjectID `bson:"_id" json:"id"`
+	Title       string             `bson:"title" json:"title"`
+	Description string             `bson:"description" json:"description"`
 	TextBody    string             `bson:"textBody" json:"textBody,omitempty"`
-	Tags        []string           `bson:"tags" json:"tags,omitempty"`
-	Views       int64              `bson:"views" json:"views,omitempty"`
-	CreatedAt   time.Time          `bson:"createdAt" json:"createdAt,omitempty"`
-	UpdatedAt   time.Time          `bson:"updatedAt" json:"updatedAt,omitempty"`
+	Tags        []string           `bson:"tags" json:"tags"`
+	Views       int64              `bson:"views" json:"views"`
+	CreatedAt   time.Time          `bson:"createdAt" json:"createdAt"`
+	UpdatedAt   time.Time          `bson:"updatedAt" json:"updatedAt"`
 }
 
 func GetShortPosts(offset int64, limit int64) ([]Post, error) {
