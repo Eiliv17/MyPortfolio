@@ -21,5 +21,9 @@ func main() {
 
 	api.GET("/posts/:id", controllers.GetPost)
 
+	api.GET("/projects", controllers.GetProjects)
+
+	api.GET("/projects/:id", controllers.GetProject)
+
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
