@@ -12,6 +12,7 @@ import (
 )
 
 var DB *mongo.Client
+var DBName string
 
 func LoadDatabase() {
 	var err error
@@ -30,4 +31,6 @@ func LoadDatabase() {
 		log.Fatal(err)
 	}
 	fmt.Println("Successfully connected and pinged MongoDB.")
+
+	DBName = os.Getenv("DB_NAME")
 }
