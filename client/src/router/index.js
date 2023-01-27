@@ -43,6 +43,11 @@ const router = createRouter({
       name: 'contact',
       component: () => import('../views/ContactView.vue')
     },
+    {
+        path: '/cookies',
+        name: 'cookies',
+        component: () => import('../views/CookiePolicyView.vue')
+    },
     { 
       path: '/:pathMatch(.*)*', 
       component: () => import('../views/Error404View.vue')
