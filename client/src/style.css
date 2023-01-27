@@ -1,0 +1,98 @@
+/* Imports */
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&display=swap');
+
+/* Basic Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Define Variables */
+:root {
+    --header-height: 6rem;
+
+    --color-primary: #03C988;
+    
+    --color-background: #121212;
+    --color-background-soft: #1E1E1E;
+
+    --color-headings: #E6E6E6;
+    --color-text: #E6E6E6;
+
+    --around-padding: 2rem
+}
+
+/* General styling */
+
+html {
+    font-size: 62.5%;
+}
+
+#app {
+    min-height: 100vh;
+    width: 100%;
+}
+
+main {
+    height: calc(100vh - var(--header-height) - var(--around-padding) * 2);
+}
+
+.container {
+    max-width: 1580px;
+    margin: 0 auto;
+    padding: var(--around-padding);
+}
+
+body {
+    background: var(--color-background);
+}
+
+
+/* Typography */
+
+body {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 2rem;
+    color: var(--color-text);
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-headings);
+    font-weight: 800;
+}
+
+h1 {
+    font-size: 9.6rem;
+}
+
+h2 {
+    font-size: 6.4rem;
+}
+
+h3 {
+    font-size: 4.8rem;
+}
+
+h4 {
+    font-size: 4rem;
+}
+
+h5 {
+    font-size: 3.6rem;
+}
+
+h6 {
+    font-size: 3.2rem;
+}
+
+a:link, a:active {
+    text-decoration: none;
+    color: var(--color-primary);
+}
