@@ -38,12 +38,13 @@ html {
 
 main {
     min-height: calc(100vh - var(--header-height) - var(--around-padding) * 2);
+    position: relative;
 }
 
 .container {
     max-width: 1580px;
     margin: 0 auto;
-    padding: var(--around-padding);
+    padding: var(--around-padding) 8rem;
 }
 
 body {
@@ -67,6 +68,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
     color: var(--color-headings);
     font-weight: 800;
+    line-height: 1;
 }
 
 h1 {
@@ -93,7 +95,32 @@ h6 {
     font-size: 3.2rem;
 }
 
-a:link, a:active {
+a {
     text-decoration: none;
+    color: var(--color-primary);
+}
+
+/* Buttons */
+
+.btn {
+    display: inline-block;
+    padding: 2rem 3rem;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.btn-primary{
+    color: var(--color-background-soft);
+    background: var(--color-primary);
+}
+
+.btn-primary-outline{
+    background: none;
+    color: var(--color-primary);
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+}
+
+.btn-dark{
+    background: var(--color-background-soft);
     color: var(--color-primary);
 }

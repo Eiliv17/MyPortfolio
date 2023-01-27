@@ -68,9 +68,11 @@ import Logo from './components/icons/Logo.vue'
         </ul>
 
     </div>
-    <div class="copyright-policy container">
-        <p class="copyright">Copyright © 2023. All rights reserved.</p>
-        <RouterLink class="router-link" :to="{name: 'cookies'}">Cookie Policy</RouterLink>
+    <div class="copyright-policy">
+        <div class="container">
+            <p class="copyright">Copyright © 2023. All rights reserved.</p>
+            <RouterLink class="router-link" :to="{name: 'cookies'}">Cookie Policy</RouterLink>
+        </div>
     </div>
   </footer>
 </template>
@@ -188,10 +190,14 @@ footer > .grid{
 .copyright-policy{
     border-top: 1px solid var(--color-text);
     background: var(--color-background-soft);
+}
+
+.copyright-policy div{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 
