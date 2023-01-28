@@ -48,22 +48,22 @@ import Logo from './components/icons/Logo.vue'
 
         <ul class="social-list">
             <li class="social-item">
-                <a href="https://github.com/Eiliv17" class="social-link"><IconSocialGithub class="social-icon"/></a>
+                <a target="_blank" href="https://github.com/Eiliv17" class="social-link"><IconSocialGithub class="social-icon"/></a>
             </li>
             <li class="social-item">
-                <a href="https://www.linkedin.com/in/alberto-fabro-475b74207/" class="social-link"><IconSocialLinkedin class="social-icon"/></a>
+                <a target="_blank" href="https://www.linkedin.com/in/alberto-fabro-475b74207/" class="social-link"><IconSocialLinkedin class="social-icon"/></a>
             </li>
             <li class="social-item">
-                <a href="https://codepen.io/Eiliv17" class="social-link"><IconSocialCodepen class="social-icon"/></a>
+                <a target="_blank" href="https://codepen.io/Eiliv17" class="social-link"><IconSocialCodepen class="social-icon"/></a>
             </li>
             <li class="social-item">
-                <a href="https://twitter.com/albertofabro_tw" class="social-link"><IconSocialTwitter class="social-icon"/></a>
+                <a target="_blank" href="https://twitter.com/albertofabro_tw" class="social-link"><IconSocialTwitter class="social-icon"/></a>
             </li>
             <li class="social-item">
-                <a href="https://www.facebook.com/albertofabro17" class="social-link"><IconSocialFacebook class="social-icon"/></a>
+                <a target="_blank" href="https://www.facebook.com/albertofabro17" class="social-link"><IconSocialFacebook class="social-icon"/></a>
             </li>
             <li class="social-item">
-                <a href="https://www.instagram.com/albertofabrodev/" class="social-link"><IconSocialInstagram class="social-icon"/></a>
+                <a target="_blank" href="https://www.instagram.com/albertofabrodev/" class="social-link"><IconSocialInstagram class="social-icon"/></a>
             </li>
         </ul>
 
@@ -76,7 +76,6 @@ import Logo from './components/icons/Logo.vue'
     </div>
   </footer>
 </template>
-
 
 
 
@@ -174,7 +173,9 @@ footer > .grid{
 }
 
 .social-link {
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid var(--color-text);
     padding: 1rem;
 }

@@ -15,6 +15,7 @@
     --header-height: 6rem;
 
     --color-primary: #03C988;
+    --color-primary-dark: #03b57a;
     
     --color-background: #121212;
     --color-background-soft: #1E1E1E;
@@ -31,18 +32,13 @@ html {
     font-size: 62.5%;
 }
 
-#app {
-    min-height: 100vh;
-    width: 100%;
-}
-
 main {
     min-height: calc(100vh - var(--header-height) - var(--around-padding) * 2);
     position: relative;
 }
 
 .container {
-    max-width: 1580px;
+    max-width: 138rem;
     margin: 0 auto;
     padding: var(--around-padding) 8rem;
 }
@@ -114,13 +110,37 @@ a {
     background: var(--color-primary);
 }
 
+.btn-primary:hover{
+    color: var(--color-background-soft);
+    background: var(--color-primary-dark);
+}
+
 .btn-primary-outline{
     background: none;
     color: var(--color-primary);
     box-shadow: inset 0 0 0 1px var(--color-primary);
 }
 
+.btn-primary-outline:hover{
+    background: var(--color-primary);
+    color: var(--color-background-soft);
+}
+
 .btn-dark{
     background: var(--color-background-soft);
     color: var(--color-primary);
+}
+
+.btn-dark:hover{
+    box-shadow: inset 0 0 0 3px var(--color-background-soft);
+    background: var(--color-primary);
+    color: var(--color-background-soft);
+}
+
+/* For screen sizes lower than 500px, since 500/16 = 31.25em */
+@media screen and (max-width: 31.25em) {
+    html {
+
+        font-size: 43.75%;
+    }
 }

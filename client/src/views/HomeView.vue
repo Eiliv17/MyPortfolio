@@ -1,6 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import Avatar from '../components/icons/Avatar.vue'
+import ProjectShort from '../components/ProjectShort.vue';
+import BlogShort from '../components/BlogShort.vue';
 </script>
 
 <template>
@@ -19,11 +21,35 @@ import Avatar from '../components/icons/Avatar.vue'
     </section>
     <section class="projects-section">
         <div class="container">
-
+            <h2 class="projects-heading">Projects</h2>
+            <div class="projects-showcase">
+                <ProjectShort v-for="project in projects"
+                :id="project.id"
+                :title="project.title"
+                :description="project.description"
+                :techstack="project.techstack"
+                :githublink="project.githublink"
+                :image="project.image"
+                :theme="project.theme"
+                />
+            </div>
+            <RouterLink class="btn btn-primary" :to="{name: 'projects'}">View More</RouterLink>
         </div>
     </section>
     <section class="blog-section">
-        
+        <div class="container">
+            <h2 class="blog-heading">Blog</h2>
+            <div class="blog-showcase">
+                <BlogShort v-for="post in posts"
+                :id="post.id"
+                :title="post.title"
+                :image="post.image"
+                :views="post.views"
+                :createdAt="post.createdAt"
+                />
+            </div>
+            <RouterLink class="btn btn-primary" :to="{name: 'blog'}">View More</RouterLink>
+        </div>
     </section>
     <div class="container contact-background">
         <section class="contact-section">
@@ -34,7 +60,27 @@ import Avatar from '../components/icons/Avatar.vue'
 </template>
 
 <script>
-
+export default {
+  components: {
+    ProjectShort,
+    BlogShort
+  },
+  data() {
+    return {
+        projects: [
+            {id: 'test', title: 'Cloud Storage Web App', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu pellentesque massa. Cras ut massa ac ex pharetra volutpat. Pellentesque a eros erat. ', techstack: ['test1', 'test2'], githublink: 'https://github.com/eiliv17', image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', theme:'swap'},
+            {id: 'test', title: 'Cloud Storage Web App', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu pellentesque massa. Cras ut massa ac ex pharetra volutpat. Pellentesque a eros erat. ', techstack: ['test1', 'test2'], githublink: 'https://github.com/eiliv17', image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', theme:''}
+        ],
+        posts: [
+            { id: 'test', title: 'A blog about trereergegregherghat time where i went in that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'},
+            { id: 'test', title: 'Ain that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'},
+            { id: 'test', title: 'A blog about that time where i went in that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'},
+            { id: 'test', title: 'A blog about that time where i went in that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'},
+            { id: 'test', title: 'A blog about that time where i went in that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'}
+        ],
+    }
+  }
+}
 </script>
 
 
@@ -78,19 +124,59 @@ import Avatar from '../components/icons/Avatar.vue'
 /* Projects Section */
 
 .projects-section{
-    min-height: 200vh;
     width: 100%;
-    margin: 10rem auto;
-    position: relative;
+    background: var(--color-background-soft);
 }
 
-.projects-section::before{
-    min-height: 200vh;
-    width: 100%;
-    position: absolute;
-    transform: skewY(5deg);
-    background: var(--color-background-soft);
-    z-index: 10;
+.projects-section .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+}
+
+.projects-heading{
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.projects-showcase {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+}
+
+.projects-section > .container > .btn {
+    margin-bottom: 4rem;
+}
+
+
+/* Blog */
+
+.blog-section .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+}
+
+.blog-heading{
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.blog-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+}
+
+.blog-section > .container > .btn {
+    margin-bottom: 4rem;
 }
 
 
@@ -116,7 +202,7 @@ import Avatar from '../components/icons/Avatar.vue'
     background: var(--color-background-soft);
     position: absolute;
     width: 100%;
-    height: 10rem;
+    height: 25rem;
     bottom: 0;
     z-index: -1;
     left: 0;
