@@ -109,7 +109,7 @@ header {
     font-weight: 600;
 }
 
-.router-link:link {
+.router-link {
     color: var(--color-text)
 }
 
