@@ -16,31 +16,31 @@ import BlogShort from '../components/BlogShort.vue';
         <div class="about-body">
             <h2 class="about-heading">About Me</h2>
             <p class="about-text">Hi, My name is Alberto Fabro and I am a junior web developer with knowledge of HTML, CSS, and JavaScript. I am passionate about creating websites that are both visually appealing and easy to use. I am always looking to improve my skills and take on new challenges.</p>
-            <RouterLink class="btn btn-primary" :to="{name: 'about'}">Get to Know Me</RouterLink>
+            <RouterLink class="btn btn-primary-outline" :to="{name: 'about'}">Get to Know Me</RouterLink>
         </div>
     </section>
     <section class="projects-section">
         <div class="container">
             <h2 class="projects-heading">Projects</h2>
             <div class="projects-showcase">
-                <ProjectShort v-for="project in projects"
+                <ProjectShort :v-if="projects" v-for="project, index in projects"
                 :id="project.id"
                 :title="project.title"
                 :description="project.description"
-                :techstack="project.techstack"
-                :githublink="project.githublink"
+                :techstack="project.techStack"
+                :githublink="project.gitHubLink"
                 :image="project.image"
-                :theme="project.theme"
+                :theme=" index % 2 !== 0 ? 'swap' : ''"
                 />
             </div>
-            <RouterLink class="btn btn-primary" :to="{name: 'projects'}">View More</RouterLink>
+            <RouterLink class="btn btn-primary-outline" :to="{name: 'projects'}">View More</RouterLink>
         </div>
     </section>
     <section class="blog-section">
         <div class="container">
             <h2 class="blog-heading">Blog</h2>
             <div class="blog-showcase">
-                <BlogShort v-for="post in posts"
+                <BlogShort :v-if="posts" v-for="post in posts"
                 :id="post.id"
                 :title="post.title"
                 :image="post.image"
@@ -48,7 +48,7 @@ import BlogShort from '../components/BlogShort.vue';
                 :createdAt="post.createdAt"
                 />
             </div>
-            <RouterLink class="btn btn-primary" :to="{name: 'blog'}">View More</RouterLink>
+            <RouterLink class="btn btn-primary-outline" :to="{name: 'blog'}">View More</RouterLink>
         </div>
     </section>
     <div class="container contact-background">
@@ -67,25 +67,35 @@ export default {
   },
   data() {
     return {
-        projects: [
-            {id: 'test', title: 'Cloud Storage Web App', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu pellentesque massa. Cras ut massa ac ex pharetra volutpat. Pellentesque a eros erat. ', techstack: ['test1', 'test2'], githublink: 'https://github.com/eiliv17', image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', theme:'swap'},
-            {id: 'test', title: 'Cloud Storage Web App', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu pellentesque massa. Cras ut massa ac ex pharetra volutpat. Pellentesque a eros erat. ', techstack: ['test1', 'test2'], githublink: 'https://github.com/eiliv17', image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', theme:''}
-        ],
-        posts: [
-            { id: 'test', title: 'A blog about trereergegregherghat time where i went in that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'},
-            { id: 'test', title: 'Ain that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'},
-            { id: 'test', title: 'A blog about that time where i went in that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'},
-            { id: 'test', title: 'A blog about that time where i went in that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'},
-            { id: 'test', title: 'A blog about that time where i went in that place and', image: `https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`, views: 1412, createdAt: 'March 25, 2021'}
-        ],
+        projects: [],
+        posts: [],
     }
+  },
+  methods: {
+    
+  },
+  mounted() {
+    fetch('http://localhost:3000/api/projects?' + new URLSearchParams({
+        offset: '0',
+        limit: '2',
+    }))
+    .then(res => res.json())
+    .then(data => this.projects = data)
+    .catch(err => console.log(err.message)); 
+
+    fetch('http://localhost:3000/api/posts?' + new URLSearchParams({
+        offset: '0',
+        limit: '4',
+    }))
+    .then(res => res.json())
+    .then(data => this.posts = data)
+    .catch(err => console.log(err.message)); 
   }
 }
 </script>
 
 
 <style scoped>
-
 /* Hero Section */
 
 .hero-section{
