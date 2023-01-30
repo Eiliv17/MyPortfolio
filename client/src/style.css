@@ -104,6 +104,7 @@ a {
     padding: 2rem 3rem;
     text-decoration: none;
     font-weight: 700;
+    cursor: pointer;
 }
 
 .btn-primary{

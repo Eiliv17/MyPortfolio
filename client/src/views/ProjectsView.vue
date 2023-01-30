@@ -5,7 +5,6 @@ import ProjectShort from '../components/ProjectShort.vue';
 <template>
     <div class="container">
         <h2 class="projects-heading">Projects</h2>
-        {{ page }}
         <div class="projects-showcase">
             <ProjectShort :v-if="projects" v-for="project, index in projects"
             :id="project.id"
