@@ -64,6 +64,7 @@ export default {
     justify-content: flex-start;
     gap: 4rem;
     font-weight: 400;
+    text-transform: uppercase;
 }
 
 .project-links{
