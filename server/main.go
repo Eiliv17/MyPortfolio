@@ -17,13 +17,11 @@ func main() {
 
 	api := r.Group("/api")
 
-	api.GET("/posts", controllers.GetPosts)
+	api.GET("/posts", controllers.RetrievePosts)
+	api.GET("/posts/:id", controllers.RetrievePost)
 
-	api.GET("/posts/:id", controllers.GetPost)
-
-	api.GET("/projects", controllers.GetProjects)
-
-	api.GET("/projects/:id", controllers.GetProject)
+	api.GET("/projects", controllers.RetrieveProjects)
+	api.GET("/projects/:id", controllers.RetrieveProject)
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }

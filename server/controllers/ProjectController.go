@@ -8,52 +8,57 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetProjects(c *gin.Context) {
+func RetrieveProjects(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
 
-	page := c.Query("page")
-	if page == "" {
-		latestprojects, err := models.GetShortProjects(0, 10)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "couldn't get any project",
-			})
-			return
-		}
-		if latestprojects == nil {
-			c.JSON(http.StatusBadRequest, gin.H{})
-			return
-		}
+	reqoffset := c.Query("offset")
+	reqlimit := c.Query("limit")
 
-		c.IndentedJSON(http.StatusOK, latestprojects)
-		return
+	// set default values if empty
+	if reqoffset == "" {
+		reqoffset = "0"
 	}
 
-	pageNumber, err := strconv.ParseInt(page, 10, 64)
+	if reqlimit == "" {
+		reqlimit = "10"
+	}
+
+	// convert data type
+	offset, err := strconv.ParseInt(reqoffset, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "invalid page",
+			"error": "invalid offset",
 		})
 		return
 	}
 
-	var offset int64 = pageNumber*10 - 9
-
-	pageprojects, err := models.GetShortProjects(offset, 10)
+	limit, err := strconv.ParseInt(reqlimit, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "couldn't get any project",
+			"error": "invalid limit",
 		})
 		return
 	}
-	if pageprojects == nil {
-		c.JSON(http.StatusBadRequest, gin.H{})
+
+	// retrieve the projects and check for any errors
+	projects, err := models.GetShortProjects(offset, limit)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "couldn't get any article",
+		})
+		return
+	}
+	if projects == nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "couldn't get any article",
+		})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, pageprojects)
+	c.IndentedJSON(http.StatusOK, projects)
 }
 
-func GetProject(c *gin.Context) {
+func RetrieveProject(c *gin.Context) {
 
 	id := c.Param("id")
 	if id == "" {

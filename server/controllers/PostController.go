@@ -8,52 +8,57 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetPosts(c *gin.Context) {
+func RetrievePosts(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
 
-	page := c.Query("page")
-	if page == "" {
-		latestposts, err := models.GetShortPosts(0, 10)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "couldn't get any post",
-			})
-			return
-		}
-		if latestposts == nil {
-			c.JSON(http.StatusBadRequest, gin.H{})
-			return
-		}
+	reqoffset := c.Query("offset")
+	reqlimit := c.Query("limit")
 
-		c.IndentedJSON(http.StatusOK, latestposts)
-		return
+	// set default values if empty
+	if reqoffset == "" {
+		reqoffset = "0"
 	}
 
-	pageNumber, err := strconv.ParseInt(page, 10, 64)
+	if reqlimit == "" {
+		reqlimit = "10"
+	}
+
+	// convert data type
+	offset, err := strconv.ParseInt(reqoffset, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "invalid page",
+			"error": "invalid offset",
 		})
 		return
 	}
 
-	var offset int64 = pageNumber*10 - 9
-
-	pageposts, err := models.GetShortPosts(offset, 10)
+	limit, err := strconv.ParseInt(reqlimit, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "couldn't get any post",
+			"error": "invalid limit",
 		})
 		return
 	}
-	if pageposts == nil {
-		c.JSON(http.StatusBadRequest, gin.H{})
+
+	// retrieve the posts and check for any errors
+	posts, err := models.GetShortPosts(offset, limit)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "couldn't get any article",
+		})
+		return
+	}
+	if posts == nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "couldn't get any article",
+		})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, pageposts)
+	c.IndentedJSON(http.StatusOK, posts)
 }
 
-func GetPost(c *gin.Context) {
+func RetrievePost(c *gin.Context) {
 
 	id := c.Param("id")
 	if id == "" {
@@ -66,7 +71,7 @@ func GetPost(c *gin.Context) {
 	post, err := models.GetPostByID(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "invalid id parameter",
+			"error": "post not found with given id",
 		})
 		return
 	}

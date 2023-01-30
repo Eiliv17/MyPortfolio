@@ -8,20 +8,24 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Post struct {
-	ID          primitive.ObjectID `bson:"_id" json:"id"`
-	Title       string             `bson:"title" json:"title"`
-	Description string             `bson:"description" json:"description"`
-	TextBody    string             `bson:"textBody" json:"textBody,omitempty"`
-	Tags        []string           `bson:"tags" json:"tags"`
-	Views       int64              `bson:"views" json:"views"`
-	CreatedAt   time.Time          `bson:"createdAt" json:"createdAt"`
-	UpdatedAt   time.Time          `bson:"updatedAt" json:"updatedAt"`
+type BlogArticle struct {
+	ID primitive.ObjectID `bson:"_id" json:"id"`
+
+	Title       string `bson:"title" json:"title"`
+	Description string `bson:"description" json:"description"`
+	TextBody    string `bson:"textBody" json:"textBody,omitempty"`
+
+	Views int64    `bson:"views" json:"views"`
+	Tags  []string `bson:"tags" json:"tags"`
+
+	CreatedAt time.Time `bson:"createdAt" json:"createdAt"`
+	UpdatedAt time.Time `bson:"updatedAt" json:"updatedAt"`
 }
 
-func GetShortPosts(offset int64, limit int64) ([]Post, error) {
+func GetShortPosts(offset int64, limit int64) ([]BlogArticle, error) {
 	// database setup
 	coll := initializers.DB.Database(initializers.DBName).Collection("posts")
 
@@ -38,7 +42,7 @@ func GetShortPosts(offset int64, limit int64) ([]Post, error) {
 	}
 
 	// decode the results
-	var results []Post
+	var results []BlogArticle
 	if err = cursor.All(context.TODO(), &results); err != nil {
 		return nil, err
 	}
@@ -46,32 +50,37 @@ func GetShortPosts(offset int64, limit int64) ([]Post, error) {
 	return results, nil
 }
 
-func GetPostByID(id string) (Post, error) {
+func GetPostByID(id string) (BlogArticle, error) {
 	// database setup
 	coll := initializers.DB.Database(initializers.DBName).Collection("posts")
 
 	// transform id
 	ObjID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return Post{}, err
+		return BlogArticle{}, err
 	}
 
 	response := coll.FindOne(context.TODO(), bson.D{{"_id", ObjID}})
 
-	var result Post
+	var result BlogArticle
 	err = response.Decode(&result)
 	if err != nil {
-		return Post{}, err
+		return BlogArticle{}, err
 	}
+
+	filter := bson.D{{"_id", ObjID}}
+	update := bson.D{{"$inc", bson.D{{"views", 1}}}}
+	opts := options.Update().SetUpsert(false)
+	coll.UpdateOne(context.TODO(), filter, update, opts)
 
 	return result, nil
 }
 
-func CreatePost(title string, description string, text string, tags []string) Post {
+func CreatePost(title string, description string, text string, tags []string) BlogArticle {
 
 	timenow := time.Now()
 
-	return Post{
+	return BlogArticle{
 		ID:          primitive.NewObjectIDFromTimestamp(timenow),
 		Title:       title,
 		Description: description,
@@ -83,7 +92,7 @@ func CreatePost(title string, description string, text string, tags []string) Po
 	}
 }
 
-func (p Post) Upload() error {
+func (p BlogArticle) Upload() error {
 	// database setup
 	coll := initializers.DB.Database(initializers.DBName).Collection("posts")
 

@@ -8,20 +8,26 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Project struct {
-	ID          primitive.ObjectID `bson:"_id" json:"id"`
-	Title       string             `bson:"title" json:"title"`
-	Description string             `bson:"description" json:"description"`
-	TextBody    string             `bson:"textBody" json:"textBody,omitempty"`
-	TechStack   []string           `bson:"techStack" json:"techStack"`
-	GitHubLink  string             `bson:"gitHubLink" json:"gitHubLink"`
-	CreatedAt   time.Time          `bson:"createdAt" json:"createdAt"`
-	UpdatedAt   time.Time          `bson:"updatedAt" json:"updatedAt"`
+type ProjectArticle struct {
+	ID primitive.ObjectID `bson:"_id" json:"id"`
+
+	Title       string `bson:"title" json:"title"`
+	Description string `bson:"description" json:"description"`
+	TextBody    string `bson:"textBody" json:"textBody,omitempty"`
+
+	Views      int64    `bson:"views" json:"views"`
+	TechStack  []string `bson:"techStack" json:"techStack"`
+	ImageURL   string   `bson:"image" json:"image"`
+	GitHubLink string   `bson:"gitHubLink" json:"gitHubLink"`
+
+	CreatedAt time.Time `bson:"createdAt" json:"createdAt"`
+	UpdatedAt time.Time `bson:"updatedAt" json:"updatedAt"`
 }
 
-func GetShortProjects(offset int64, limit int64) ([]Project, error) {
+func GetShortProjects(offset int64, limit int64) ([]ProjectArticle, error) {
 	// database setup
 	coll := initializers.DB.Database(initializers.DBName).Collection("projects")
 
@@ -38,7 +44,7 @@ func GetShortProjects(offset int64, limit int64) ([]Project, error) {
 	}
 
 	// decode the results
-	var results []Project
+	var results []ProjectArticle
 	if err = cursor.All(context.TODO(), &results); err != nil {
 		return nil, err
 	}
@@ -46,44 +52,60 @@ func GetShortProjects(offset int64, limit int64) ([]Project, error) {
 	return results, nil
 }
 
-func GetProjectByID(id string) (Project, error) {
+func GetProjectByID(id string) (ProjectArticle, error) {
 	// database setup
 	coll := initializers.DB.Database(initializers.DBName).Collection("projects")
 
 	// transform id
 	ObjID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return Project{}, err
+		return ProjectArticle{}, err
 	}
 
 	response := coll.FindOne(context.TODO(), bson.D{{"_id", ObjID}})
 
-	var result Project
+	var result ProjectArticle
 	err = response.Decode(&result)
 	if err != nil {
-		return Project{}, err
+		return ProjectArticle{}, err
 	}
+
+	filter := bson.D{{"_id", ObjID}}
+	update := bson.D{{"$inc", bson.D{{"views", 1}}}}
+	opts := options.Update().SetUpsert(false)
+	coll.UpdateOne(context.TODO(), filter, update, opts)
 
 	return result, nil
 }
 
-func CreateProject(title string, description string, text string, githublink string, techstack []string) Project {
+func CreateProject(
+	title string,
+	description string,
+	text string,
+	githublink string,
+	techstack []string,
+	imageurl string) ProjectArticle {
 
 	timenow := time.Now()
 
-	return Project{
-		ID:          primitive.NewObjectIDFromTimestamp(timenow),
+	return ProjectArticle{
+		ID: primitive.NewObjectIDFromTimestamp(timenow),
+
 		Title:       title,
 		Description: description,
 		TextBody:    text,
-		TechStack:   techstack,
-		GitHubLink:  githublink,
-		CreatedAt:   timenow,
-		UpdatedAt:   timenow,
+
+		Views:      0,
+		ImageURL:   imageurl,
+		TechStack:  techstack,
+		GitHubLink: githublink,
+
+		CreatedAt: timenow,
+		UpdatedAt: timenow,
 	}
 }
 
-func (p Project) Upload() error {
+func (p ProjectArticle) Upload() error {
 	// database setup
 	coll := initializers.DB.Database(initializers.DBName).Collection("projects")
 

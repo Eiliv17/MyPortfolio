@@ -2,7 +2,6 @@ package main
 
 import (
 	"portfolio-server/initializers"
-	"portfolio-server/models"
 )
 
 func init() {
@@ -17,7 +16,7 @@ func main() {
 		post.Upload()
 	} */
 
-	for i := 0; i < 34; i++ {
+	/* for i := 0; i < 34; i++ {
 		project := models.CreateProject(
 			"this is a test title for a project",
 			"this is a test description for a project",
@@ -26,6 +25,6 @@ func main() {
 			[]string{"html", "css", "go"},
 		)
 		project.Upload()
-	}
+	} */
 
 }
