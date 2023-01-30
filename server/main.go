@@ -23,5 +23,8 @@ func main() {
 	api.GET("/projects", controllers.RetrieveProjects)
 	api.GET("/projects/:id", controllers.RetrieveProject)
 
+	api.POST("/contact", controllers.PostContact)
+	api.OPTIONS("/contact", controllers.OptionsContact)
+
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
