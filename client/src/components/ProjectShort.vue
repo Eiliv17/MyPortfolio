@@ -6,7 +6,7 @@ import { RouterLink } from 'vue-router'
     <article class="project">
         <div class="project-body" :class="{swap: theme === 'swap'}">
             <h3 class="project-title">{{ title }}</h3>
-            <p class="project-description">{{ description }}</p>
+            <p class="project-description text-description">{{ description }}</p>
             <ul class="project-techstack">
                 <li v-for="tech in techstack">{{ tech }}</li>
             </ul>
@@ -40,7 +40,6 @@ export default {
 .project {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 50vh;
     gap: 4rem;
 }
 
@@ -52,10 +51,6 @@ export default {
     gap: 2rem;
 }
 
-.project-description {
-    font-size: 3.6rem;
-    text-overflow: ellipsis;
-}
 
 .project-techstack{
     list-style: none;
@@ -90,5 +85,20 @@ export default {
     order: 2;
 }
 
+
+@media screen and (max-width: 37.5em) {
+    .project {
+        grid-template-columns: 1fr;
+    }
+
+    .swap {
+        order: none;
+    }
+
+    .project-body {
+        order: 2;
+    }
+
+}
 
 </style>

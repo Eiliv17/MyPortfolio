@@ -93,6 +93,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8rem;
+    width: 100%;
 }
 
 .navigation{
@@ -105,6 +106,12 @@ export default {
 .btn {
     outline: none;
     cursor: pointer;
+}
+
+@media screen and (max-width: 37.5em) {
+    .blog-showcase {
+        grid-template-columns: 1fr;
+    }
 }
 
 </style>

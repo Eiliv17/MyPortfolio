@@ -44,7 +44,7 @@ export default {
     background: var(--color-background-soft);
     padding: 4rem;
     cursor: pointer;
-    width: 50rem;
+    width: 100%;
 }
 
 .post-title {

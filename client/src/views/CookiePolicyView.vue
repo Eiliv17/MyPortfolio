@@ -23,12 +23,14 @@ h1 {
 }
 
 .policy-body{
-    width: 60%;
+    max-width: 60ch;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     text-align: justify;
+    margin-bottom: 8rem;
+    padding: 3rem;
 }
 
 </style>

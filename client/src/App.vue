@@ -15,18 +15,23 @@ import Logo from './components/icons/Logo.vue'
         <RouterLink class="logo-link" :to="{name: 'home'}">
             <Logo class="logo"/>
         </RouterLink>
-        <nav class="header-navigation">
-          <RouterLink class="router-link" :to="{name: 'home'}">Home</RouterLink>
-          <RouterLink class="router-link" :to="{name: 'about'}">About</RouterLink>
-          <RouterLink class="router-link" :to="{name: 'projects'}">Projects</RouterLink>
-          <RouterLink class="router-link" :to="{name: 'blog'}">Blog</RouterLink>
-          <RouterLink class="router-link" :to="{name: 'contact'}">Contact</RouterLink>
+        <nav class="header-navigation" :class="{ active : hamburgerActive}">
+          <RouterLink @click="hamburgerActive = false" class="router-link" :to="{name: 'home'}">Home</RouterLink>
+          <RouterLink @click="hamburgerActive = false" class="router-link" :to="{name: 'about'}">About</RouterLink>
+          <RouterLink @click="hamburgerActive = false" class="router-link" :to="{name: 'projects'}">Projects</RouterLink>
+          <RouterLink @click="hamburgerActive = false" class="router-link" :to="{name: 'blog'}">Blog</RouterLink>
+          <RouterLink @click="hamburgerActive = false" class="router-link" :to="{name: 'contact'}">Contact</RouterLink>
         </nav>
+        <div @click="hamburgerActive = !hamburgerActive" class="hamburger" :class="{ active : hamburgerActive}">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
       </header>
   </div>
 
 
-  <main>
+  <main @click="hamburgerActive = false">
     <RouterView />
   </main>
   
@@ -78,6 +83,16 @@ import Logo from './components/icons/Logo.vue'
 </template>
 
 
+<script>
+export default {
+    data() {
+        return {
+            hamburgerActive: false,
+        }
+    }
+}
+</script>
+
 
 <style scoped>
 
@@ -88,11 +103,15 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .logo-link {
     width: auto;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo {
@@ -118,6 +137,69 @@ header {
 }
 
 
+/* Hamburger */
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 30px;
+    height: 2px;
+    background: var(--color-text);
+    transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 43.75em) {
+
+    .header-navigation{
+        position: absolute;
+        left: -100%;
+        top: var(--header-height);
+        flex-direction: column;
+        width: 100%;
+        background: var(--color-background);
+        z-index: 10;
+        gap: 2rem;
+        padding: 2rem;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .header-navigation.active{
+        left: 0;
+    }
+
+    .header-navigation a{
+        padding: 2rem;
+    }
+
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+    }
+
+    .hamburger.active .bar:first-child {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:last-child {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+
+}
+
+
+
 /* Footer */
 
 footer {
@@ -137,16 +219,16 @@ footer > .grid{
 }
 
 .footer-logo{
-    width: 15rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .footer-logo .logo {
     fill: var(--color-text);
+    max-width: 10rem;
 }
 
 .footer-navigation{
@@ -154,7 +236,7 @@ footer > .grid{
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .social-list {
@@ -168,9 +250,6 @@ footer > .grid{
     gap: 2rem;
 }
 
-.social-item{
-    padding: 2rem;
-}
 
 .social-link {
     display: inline-flex;
@@ -181,7 +260,7 @@ footer > .grid{
 }
 
 .social-icon {
-    width: 7.5rem;
+    max-width: 7.5rem;
     height: 7.5rem;
     fill: var(--color-text);
 }
@@ -199,6 +278,34 @@ footer > .grid{
     align-items: center;
     padding-top: 4rem;
     padding-bottom: 4rem;
+}
+
+/* For screen sizes lower than 700px  */
+@media screen and (max-width: 43.75em) {
+    .footer-navigation {
+        gap: 1rem;
+    }
+
+    .social-icon {
+        max-width: 5rem;
+        height: 5rem;
+        fill: var(--color-text);
+    }
+
+    .footer-logo .logo {
+        width: 100%;
+        display: inline-block;
+        max-width: 10rem;
+    }
+
+
+
+}
+
+@media screen and (max-width: 37.5em) {
+    .social-list {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 

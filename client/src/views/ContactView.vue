@@ -82,6 +82,8 @@ textarea {
     min-height: calc(100vh - var(--header-height) - var(--around-padding) * 2);
     align-items: center;
     justify-items: center;
+    gap: 4rem;
+    margin-bottom: 8rem;
 }
 
 .contact-head{
@@ -96,7 +98,8 @@ form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    width: 40rem;
+    max-width: 40rem;
+    width: 100%;
 }
 
 input, textarea{
@@ -118,6 +121,12 @@ input, textarea{
 
 .error {
     color: red;
+}
+
+@media screen and (max-width: 37.5em) {
+    .container {
+        grid-template-columns: 1fr;
+    }
 }
 
 </style>
