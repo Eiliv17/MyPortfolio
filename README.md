@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 <!-- Head section -->
 <div align="center">
-  <a href="https://github.com/Eiliv17/CloudStorageWebApp">
+  <a href="https://github.com/Eiliv17/MyPortfolio">
     <img src="./README/Product.svg" alt="Logo">
   </a>
 
