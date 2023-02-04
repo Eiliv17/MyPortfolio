@@ -9,7 +9,10 @@ import BlogShort from '../components/BlogShort.vue';
     <section class="hero-section container">
         <p>I'm a</p>
         <h1>Front-end Web <br> Developer</h1>
-        <a href="https://google.com" class="btn btn-primary" target="_blank">Download CV</a>
+        <div class="download-cv-links">
+            <a href="/cv-en.pdf" class="btn btn-primary" target="_blank">Download CV (en)</a>
+            <a href="/cv-it.pdf" class="btn btn-primary" target="_blank">Download CV (it)</a>
+        </div>
     </section>
     <section class="about-section container">
         <Avatar class="avatar" />
@@ -109,6 +112,13 @@ export default {
 .hero-section p{
     margin-top: 8rem;
     font-weight: 600;
+}
+
+.download-cv-links{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4rem;
 }
 
 /* About Section */
@@ -221,6 +231,12 @@ export default {
     .about-section {
         grid-template-columns: 1fr;
         margin-bottom: 8rem;
+    }
+
+    .download-cv-links {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
     }
 
     .blog-showcase{

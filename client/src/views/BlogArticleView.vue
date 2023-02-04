@@ -49,6 +49,9 @@ export default {
     },
     mounted () {
         this.loadArticle();
+    },
+    updated() {
+        document.title = this.title;
     }
 }
 </script>

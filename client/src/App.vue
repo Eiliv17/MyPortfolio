@@ -204,7 +204,7 @@ header {
 
 footer {
     width: 100%;
-    height: 50vh;
+    min-height: 50vh;
     background: var(--color-background-soft);
 }
 
@@ -298,13 +298,28 @@ footer > .grid{
         max-width: 10rem;
     }
 
+    .social-list {
+        grid-template-columns: 1fr 1fr;
+    }
 
 
 }
 
 @media screen and (max-width: 37.5em) {
+    
+
+    footer > .grid{
+        grid-template-columns: 1.5fr 1.5fr;
+        gap: 4rem;
+        padding: 2rem;
+    }
+
     .social-list {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .footer-logo{
+        grid-column: 1/ -1;
     }
 }
 

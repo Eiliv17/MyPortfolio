@@ -54,8 +54,11 @@ export default {
             .catch(err => console.log(err)); 
         }
     },
-    mounted () {
+    mounted() {
         this.loadArticle();
+    },
+    updated() {
+        document.title = this.title;
     }
 }
 </script>
