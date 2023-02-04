@@ -31,7 +31,7 @@ func GetShortPosts(offset int64, limit int64) ([]BlogArticle, error) {
 
 	// create the stages
 	unsetStage := bson.D{{"$unset", bson.A{"textBody"}}}
-	sortStage := bson.D{{"$sort", bson.D{{"_id", 1}}}}
+	sortStage := bson.D{{"$sort", bson.D{{"_id", -1}}}}
 	skipStage := bson.D{{"$skip", offset}}
 	limitStage := bson.D{{"$limit", limit}}
 
