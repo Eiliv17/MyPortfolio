@@ -2,6 +2,7 @@ package main
 
 import (
 	"portfolio-server/initializers"
+	"portfolio-server/models"
 )
 
 func init() {
@@ -26,5 +27,18 @@ func main() {
 		)
 		project.Upload()
 	} */
+
+	text := `
+	<h2>Hello this is a test</h2>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure itaque voluptate optio excepturi asperiores provident, exercitationem nobis molestias nesciunt ullam vel commodi qui sapiente labore rem repellendus cumque inventore, assumenda eos perferendis. Quaerat cupiditate neque magni fugit consequuntur! Neque, architecto?</p>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure itaque voluptate optio excepturi asperiores provident, exercitationem nobis molestias nesciunt ullam vel commodi qui sapiente labore rem repellendus cumque inventore, assumenda eos perferendis. Quaerat cupiditate neque magni fugit consequuntur! Neque, architecto?</p>
+
+    <h2>Hello this is a test</h2>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure itaque voluptate optio excepturi asperiores provident, exercitationem nobis molestias nesciunt ullam vel commodi qui sapiente labore rem repellendus cumque inventore, assumenda eos perferendis. Quaerat cupiditate neque magni fugit consequuntur! Neque, architecto?</p>
+	`
+
+	post := models.CreatePost("this is a better test for the dimensions of the post title", "a simple description", text, []string{"test", "test"})
+
+	post.Upload()
 
 }
