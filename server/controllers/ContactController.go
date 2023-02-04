@@ -2,20 +2,26 @@ package controllers
 
 import (
 	"net/http"
+	"os"
 	"portfolio-server/models"
 
 	"github.com/gin-gonic/gin"
 )
 
 func OptionsContact(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
+	if os.Getenv("GO_ENV") != "production" {
+		c.Header("Access-Control-Allow-Origin", "*")
+	}
 	c.Header("Access-Control-Allow-Methods", "POST")
 	c.Header("Access-Control-Allow-Headers", "content-type")
 	c.AbortWithStatus(http.StatusNoContent)
 }
 
 func PostContact(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
+	if os.Getenv("GO_ENV") != "production" {
+		c.Header("Access-Control-Allow-Origin", "*")
+	}
+
 	c.Header("Access-Control-Allow-Methods", "POST")
 	c.Header("Access-Control-Allow-Headers", "content-type")
 

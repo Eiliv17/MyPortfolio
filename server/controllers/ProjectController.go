@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"os"
 	"portfolio-server/models"
 	"strconv"
 
@@ -9,7 +10,9 @@ import (
 )
 
 func RetrieveProjects(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
+	if os.Getenv("GO_ENV") != "production" {
+		c.Header("Access-Control-Allow-Origin", "*")
+	}
 
 	reqoffset := c.Query("offset")
 	reqlimit := c.Query("limit")
@@ -59,6 +62,9 @@ func RetrieveProjects(c *gin.Context) {
 }
 
 func RetrieveProject(c *gin.Context) {
+	if os.Getenv("GO_ENV") != "production" {
+		c.Header("Access-Control-Allow-Origin", "*")
+	}
 
 	id := c.Param("id")
 	if id == "" {
